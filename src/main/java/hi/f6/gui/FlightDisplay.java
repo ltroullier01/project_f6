@@ -15,7 +15,8 @@ public class FlightDisplay extends VBox {
     FlightDisplayController flightDisplayController;
 
     public FlightDisplay() {
-
+        
+        this.flightDisplayController = new FlightDisplayController(this);
         flightTable = new TableView<>();
 
         TableColumn<Flight, String> column1 = new TableColumn<>("Reference");
@@ -52,5 +53,10 @@ public class FlightDisplay extends VBox {
     public TableView<Flight> getFlightTable() {
         return flightTable;
     }
+
+    public FlightDisplayController getFlightDisplayController() {
+        return flightDisplayController;
+    }
+    
 
 }

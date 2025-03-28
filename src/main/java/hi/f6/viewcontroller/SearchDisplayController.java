@@ -51,6 +51,8 @@ public class SearchDisplayController {
         System.out.println(departureDate);
         System.out.println(arrivalDate);
 
+        searchResult.add(new Flight(0, "152TR22E", "Prague", "Marseille", null, null, 9000, 45, 2, null, 40));
+        searchResult.add(new Flight(0, "132PL67E", "Praque", "Lille", null, null, 20, 45, 2, null, 40));
         return searchResult;
     }
 }

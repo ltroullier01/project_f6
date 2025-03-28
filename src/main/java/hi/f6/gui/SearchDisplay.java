@@ -80,7 +80,7 @@ public class SearchDisplay extends VBox {
           @Override
           public void handle(ActionEvent e) {
             List<Flight> searchResult = new ArrayList<>();
-            searchResult = controller.search();
+            mainView.getFd().getFlightDisplayController().updateTable(controller.search());
           }
         }
       );
@@ -102,27 +102,10 @@ public class SearchDisplay extends VBox {
   }
 
   // GETTERS
-  public Text getT_title() {
-    return t_title;
-  }
-
-  public TextField getTf_departureCity() {
-    return tf_departureCity;
-  }
-
-  public TextField getTf_destinationCity() {
-    return tf_destinationCity;
-  }
-
-  public DatePicker getDp_departureTime() {
-    return dp_departureTime;
-  }
-
-  public DatePicker getDp_arrivalTime() {
-    return dp_arrivalTime;
-  }
-
-  public Button getB_search() {
-    return b_search;
-  }
+  public Text getT_title() {return t_title;}
+  public TextField getTf_departureCity() {return tf_departureCity;}
+  public TextField getTf_destinationCity() {return tf_destinationCity;}
+  public DatePicker getDp_departureTime() {return dp_departureTime;}
+  public DatePicker getDp_arrivalTime() {return dp_arrivalTime;}
+  public Button getB_search() {return b_search;}
 }
