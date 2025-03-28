@@ -20,6 +20,22 @@ public class Flight {
     this.flightID = flightID;
   }
 
+  public Flight(int flightID, String flightRef, String departureCity, String destinationCity,
+      LocalDateTime departureTime, LocalDateTime arrivalTime, float price, int duration, int layovers, Seat[] seats,
+      float carbonFootprint) {
+    this.flightID = flightID;
+    this.flightRef = flightRef;
+    this.departureCity = departureCity;
+    this.destinationCity = destinationCity;
+    this.departureTime = departureTime;
+    this.arrivalTime = arrivalTime;
+    this.price = price;
+    this.duration = duration;
+    this.layovers = layovers;
+    this.seats = seats;
+    this.carbonFootprint = carbonFootprint;
+  }
+
   // Getters
   public int getID() {
     return flightID;
