@@ -86,7 +86,12 @@ public class Booking {
     }
 
     public void setPayment(Payment payment){
-        this.payment=payment;
+
+        if(bookingID==payment.getBookingID()){
+            this.payment=payment;
+        } else{
+            System.out.println("BookingID does not match");
+        }
 
     }
 
@@ -105,6 +110,8 @@ public class Booking {
 
         totalPrice = seatPrice+flightPrice+baggagePrice;
 
+
+        payment.setAmount(totalPrice);
         this.price=totalPrice;
 
     }
