@@ -1,8 +1,12 @@
 package hi.f6.gui;
 
 import hi.f6.controllers.FlightController;
+import hi.f6.models.Flight;
 import hi.f6.viewcontroller.SearchDisplayController;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -73,7 +77,8 @@ public class SearchDisplay extends VBox {
         new EventHandler<ActionEvent>() {
           @Override
           public void handle(ActionEvent e) {
-            controller.search();
+            List<Flight> searchResult = new ArrayList<>();
+            searchResult = controller.search();
           }
         }
       );
