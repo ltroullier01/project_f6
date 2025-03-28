@@ -1,5 +1,7 @@
 package hi.f6.gui;
 
+import hi.f6.viewcontroller.BookingDisplayController;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -10,9 +12,12 @@ import javafx.scene.text.Text;
 
 public class BookingDisplay extends VBox {
 
+        BookingDisplayController controller;
+
         Text flightnumberText;
         Text desLocText;
         Text depLocText;
+
         Text depTimeText;
         Text arrTimeText;
         Text priceText;
@@ -27,6 +32,11 @@ public class BookingDisplay extends VBox {
         Button bookingButton;
 
         public BookingDisplay() {
+
+                // Component initialisation and creation
+
+                this.controller = new BookingDisplayController(this);
+
                 this.setSpacing(13);
 
                 HBox alignmentBoxFnb = new HBox();
@@ -51,6 +61,14 @@ public class BookingDisplay extends VBox {
                 this.seatSelector = new ChoiceBox<String>();
 
                 this.bookingButton = new Button("Book");
+                this.bookingButton.setStyle(
+                                "-fx-background-color: white;" +
+                                                "-fx-background-radius: 8;" +
+                                                "-fx-border-color: lightgray;" +
+                                                "-fx-border-width: 1;" +
+                                                "-fx-padding: 8 15 8 15;");
+
+                // Add to the view
 
                 alignmentBoxFnb.getChildren().add(flightnumberText);
                 alignmentBoxFnb.setAlignment(Pos.CENTER);
@@ -62,36 +80,81 @@ public class BookingDisplay extends VBox {
 
                 this.getChildren().addAll(
                                 alignmentBoxFnb, depLocText, desLocText, depTimeText, arrTimeText,
-                                durationText, layoverText, cfootpText, nbSeatAvaibText, boxClass, boxSeat, priceText,
+                                durationText, layoverText, cfootpText, boxClass, nbSeatAvaibText, boxSeat, priceText,
                                 alignmentBoxBook);
 
-                this.bookingButton.setStyle(
-                                "-fx-background-color: white;" +
-                                                "-fx-background-radius: 8;" +
-                                                "-fx-border-color: lightgray;" +
-                                                "-fx-border-width: 1;" +
-                                                "-fx-padding: 8 15 8 15;" // haut droit bas gauche
-                );
+                // Event handler and controller calls
 
-                // Effet au survol (facultatif)
+                this.classSelector.setOnAction(e -> {
+                        this.controller.updateAvaiSeat();
+                });
+
+                this.bookingButton.setOnMouseClicked(e -> {
+                        this.controller.bookFlight();
+                });
+
                 this.bookingButton.setOnMouseEntered(e -> {
-                        this.bookingButton.setStyle(
-                                        "-fx-background-color: #f0f0f0;" +
-                                                        "-fx-background-radius: 8;" +
-                                                        "-fx-border-color: lightgray;" +
-                                                        "-fx-border-width: 1;" +
-                                                        "-fx-padding: 8 15 8 15;");
+                        this.controller.hoverBookingButton();
                 });
 
                 this.bookingButton.setOnMouseExited(e -> {
-                        this.bookingButton.setStyle(
-                                        "-fx-background-color: white;" +
-                                                        "-fx-background-radius: 8;" +
-                                                        "-fx-border-color: lightgray;" +
-                                                        "-fx-border-width: 1;" +
-                                                        "-fx-padding: 8 15 8 15;");
+                        this.controller.resetHoverBookingButton();
                 });
 
+        }
+
+        // Getter
+
+        public Text getFlightnumberText() {
+                return flightnumberText;
+        }
+
+        public Text getDesLocText() {
+                return desLocText;
+        }
+
+        public Text getDepLocText() {
+                return depLocText;
+        }
+
+        public Text getDepTimeText() {
+                return depTimeText;
+        }
+
+        public Text getArrTimeText() {
+                return arrTimeText;
+        }
+
+        public Text getPriceText() {
+                return priceText;
+        }
+
+        public Text getDurationText() {
+                return durationText;
+        }
+
+        public Text getLayoverText() {
+                return layoverText;
+        }
+
+        public Text getCfootpText() {
+                return cfootpText;
+        }
+
+        public Text getNbSeatAvaibText() {
+                return nbSeatAvaibText;
+        }
+
+        public ChoiceBox getClassSelector() {
+                return classSelector;
+        }
+
+        public ChoiceBox getSeatSelector() {
+                return seatSelector;
+        }
+
+        public Button getBookingButton() {
+                return bookingButton;
         }
 
 }
