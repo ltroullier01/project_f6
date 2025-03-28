@@ -2,18 +2,19 @@ package hi.f6.viewcontroller;
 
 import java.time.LocalDate;
 
+import hi.f6.controllers.FlightController;
 import hi.f6.gui.SearchDisplay;
 
 public class SearchDisplayController {
 
     // Innitialization of attributs
     private SearchDisplay searchDisplay;
-    //private FlightController flightController;
+    private FlightController flightController;
 
     // Constructor
-    public SearchDisplayController (SearchDisplay searchDisplay_var/*,FlightController flightController_var*/){
+    public SearchDisplayController (SearchDisplay searchDisplay_var,FlightController flightController_var){
         this.searchDisplay = searchDisplay_var;
-        //this.flightController = flightController_var;
+        this.flightController = flightController_var;
     }
 
     // Search methid depending on the different cases

@@ -1,5 +1,6 @@
 package hi.f6.gui;
 
+import hi.f6.controllers.FlightController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,9 +11,11 @@ public class MainView extends BorderPane {
     SearchDisplay sd;
     FlightDisplay fd;
     BookingDisplay bd;
+    FlightController flightController;
 
     public MainView() {
-        this.sd = new SearchDisplay();
+        this.flightController = new FlightController();
+        this.sd = new SearchDisplay(this.flightController);
         this.fd = new FlightDisplay();
         this.bd = new BookingDisplay();
 

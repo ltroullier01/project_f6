@@ -1,5 +1,6 @@
 package hi.f6.gui;
 
+import hi.f6.controllers.FlightController;
 import hi.f6.viewcontroller.SearchDisplayController;
 import java.time.LocalDate;
 import javafx.event.ActionEvent;
@@ -27,10 +28,9 @@ public class SearchDisplay extends VBox {
   SearchDisplayController controller;
 
   // Constructor
-  public SearchDisplay() {
+  public SearchDisplay(FlightController flightController) {
     // Controller creation
-    this.controller =
-      new SearchDisplayController(this/*,FlightController flightController */);
+    this.controller = new SearchDisplayController(this, flightController);
 
     // Title of the section
     this.t_title = new Text("Flight Reasearch");
