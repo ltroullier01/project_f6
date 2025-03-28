@@ -1,6 +1,6 @@
 module hi.f6 {
     requires javafx.controls;
-    requires transitive javafx.graphics;
+    requires javafx.graphics;
 
     exports hi.f6;
 }
