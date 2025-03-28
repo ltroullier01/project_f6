@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 public class SearchDisplay extends VBox {
 
   // Innitialization of attributs
+  private MainView mainView;
   private Text t_title;
   private TextField tf_departureCity;
   private TextField tf_destinationCity;
@@ -32,9 +33,10 @@ public class SearchDisplay extends VBox {
   SearchDisplayController controller;
 
   // Constructor
-  public SearchDisplay(FlightController flightController) {
-    // Controller creation
-    this.controller = new SearchDisplayController(this, flightController);
+  public SearchDisplay(MainView mainView_var) {
+    // MainView and Controller creation
+    this.mainView = mainView_var;
+    this.controller = new SearchDisplayController(this, this.mainView.getFlightController());
 
     // Title of the section
     this.t_title = new Text("Flight Reasearch");
