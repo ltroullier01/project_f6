@@ -1,8 +1,10 @@
 package hi.f6.gui;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
+import hi.f6.viewcontroller.SearchDisplayController;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -13,56 +15,80 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class SearchDisplay extends VBox{
-    Text t_title;
-    TextField tf_departureCity;
-    TextField tf_destinationCity;
-    DatePicker dp_departureTime;
-    DatePicker dp_arrivalTime;
-    TextField tf_hourDeparture;
-    TextField tf_hourArrival;
-    Button b_search;
 
+    // Innitialization of attributs
+    private Text t_title;
+    private TextField tf_departureCity;
+    private TextField tf_destinationCity;
+    private DatePicker dp_departureTime;
+    private DatePicker dp_arrivalTime;
+    private Button b_search;
+
+    // Initialization of the controller of the view
+    SearchDisplayController controller;
+
+    // Constructor
     public SearchDisplay(){
-        this.setSpacing(10);
 
+        // Controller creation
+        this.controller = new SearchDisplayController(this/*,FlightController flightController */); 
+
+        // Title of the section
         this.t_title = new Text("Flight Reasearch");
         this.t_title.setFont(new Font(30));
 
+        // Departure City components
         this.tf_departureCity = new TextField("From");
         VBox departureCityChoice = new VBox();
         departureCityChoice.getChildren().addAll(new Text("From :"),this.tf_departureCity);
 
+        // Destination City components
         this.tf_destinationCity = new TextField("To");
         VBox arrivalCityChoice = new VBox();
         arrivalCityChoice.getChildren().addAll(new Text("To :"),this.tf_destinationCity);
 
+        // Date&Time departure components
         LocalDate initDate = LocalDate.now(); 
         this.dp_departureTime = new DatePicker(initDate);
-        LocalTime initHour = LocalTime.now();
-        this.tf_hourDeparture = new TextField(String.valueOf(initHour.getHour()));
-        HBox departureChoice = new HBox();
-        departureChoice.getChildren().addAll(this. dp_departureTime, this.tf_hourDeparture, new Text("h"));
-        departureChoice.setAlignment(Pos.CENTER);
         VBox departureHourChoice = new VBox();
-        departureHourChoice.getChildren().addAll(new Text("Departure Time :"),departureChoice);
-
+        departureHourChoice.setAlignment(Pos.CENTER);
+        departureHourChoice.getChildren().addAll(new Text("Departure Date :"),this. dp_departureTime);
+        
+        // Date&Time arrival components
         this.dp_arrivalTime = new DatePicker(initDate);
-        this.tf_hourArrival = new TextField(String.valueOf(initHour.getHour()));
-        HBox arrivalChoice = new HBox();
-        arrivalChoice.getChildren().addAll(this.dp_arrivalTime, this.tf_hourArrival, new Text("h"));
-        arrivalChoice.setAlignment(Pos.CENTER);
         VBox arrivalHourChoice = new VBox();
-        arrivalHourChoice.getChildren().addAll(new Text("Arrival Date :"), arrivalChoice);
+        arrivalHourChoice.setAlignment(Pos.CENTER);
+        arrivalHourChoice.getChildren().addAll(new Text("Arrival Date :"), this.dp_arrivalTime);
 
+        // Search button
         this.b_search = new Button("SEARCH");
-
+        this.b_search.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                controller.search();
+                }
+            });
+        HBox buttonCenter = new HBox();
+        buttonCenter.setAlignment(Pos.CENTER);
+        buttonCenter.getChildren().addAll(this.b_search);
+        
+        // Initialization of the view
+        this.setSpacing(20);
         this.getChildren().addAll(
             this.t_title, 
             departureCityChoice,
             arrivalCityChoice,
             departureHourChoice,
             arrivalHourChoice,
-            this.b_search
+            buttonCenter
             );
     }
+
+
+    // GETTERS
+    public Text getT_title() {return t_title;}
+    public TextField getTf_departureCity() {return tf_departureCity;}
+    public TextField getTf_destinationCity() {return tf_destinationCity;}
+    public DatePicker getDp_departureTime() {return dp_departureTime;}
+    public DatePicker getDp_arrivalTime() {return dp_arrivalTime;}
+    public Button getB_search() {return b_search;}
 }

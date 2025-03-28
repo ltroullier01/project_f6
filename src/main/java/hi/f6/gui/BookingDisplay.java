@@ -62,7 +62,7 @@ public class BookingDisplay extends VBox {
 
         this.getChildren().addAll(
                 alignmentBoxFnb, depLocText, desLocText, depTimeText, arrTimeText,
-                , durationText, layoverText, cfootpText, nbSeatAvaibText, boxClass, boxSeat,priceText,alignmentBoxBook);
+                durationText, layoverText, cfootpText, nbSeatAvaibText, boxClass, boxSeat,priceText,alignmentBoxBook);
 
         this.bookingButton.setStyle(
                 "-fx-background-color: white;" +

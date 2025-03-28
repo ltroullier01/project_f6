@@ -9,7 +9,7 @@ import javafx.scene.text.TextAlignment;
 public class FlightDisplay extends VBox {
 
     public FlightDisplay() {
-
+        
     }
 
 }
