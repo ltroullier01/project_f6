@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Flight {
 
   private int flightID;
+  private String flightRef;
   private String departureCity;
   private String destinationCity;
   private LocalDateTime departureTime;
@@ -60,6 +61,14 @@ public class Flight {
     return carbonFootprint;
   }
 
+  public int getFlightID() {
+    return flightID;
+  }
+
+  public String getFlightRef() {
+    return flightRef;
+  }
+
   // Setters
   public void setDepartureCity(String departureCity) {
     this.departureCity = departureCity;
@@ -95,5 +104,13 @@ public class Flight {
 
   public void setCarbonFootprint(float carbonFootprint) {
     this.carbonFootprint = carbonFootprint;
+  }
+
+  public void setFlightID(int flightID) {
+    this.flightID = flightID;
+  }
+
+  public void setFlightRef(String flightRef) {
+    this.flightRef = flightRef;
   }
 }

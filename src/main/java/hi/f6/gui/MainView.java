@@ -17,7 +17,7 @@ public class MainView extends BorderPane {
         this.flightController = new FlightController();
         this.sd = new SearchDisplay(this.flightController);
         this.fd = new FlightDisplay();
-        this.bd = new BookingDisplay();
+        this.bd = new BookingDisplay(flightController);
 
         this.setLeft(this.sd);
         this.setCenter(this.fd);
