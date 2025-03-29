@@ -4,4 +4,5 @@ module hi.f6 {
     requires javafx.base;
 
     exports hi.f6;
+    exports hi.f6.models;
 }

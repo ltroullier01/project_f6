@@ -1,5 +1,6 @@
 package hi.f6.gui;
 
+import hi.f6.controllers.FlightController;
 import hi.f6.viewcontroller.BookingDisplayController;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
@@ -12,7 +13,8 @@ import javafx.scene.text.Text;
 
 public class BookingDisplay extends VBox {
 
-        BookingDisplayController controller;
+        BookingDisplayController bkDbController;
+        FlightController flightController;
 
         Text flightnumberText;
         Text desLocText;
@@ -31,11 +33,12 @@ public class BookingDisplay extends VBox {
 
         Button bookingButton;
 
-        public BookingDisplay() {
+        public BookingDisplay(FlightController fl_cont) {
 
                 // Component initialisation and creation
 
-                this.controller = new BookingDisplayController(this);
+                this.bkDbController = new BookingDisplayController(this);
+                this.flightController = fl_cont;
 
                 this.setSpacing(13);
 
@@ -44,7 +47,7 @@ public class BookingDisplay extends VBox {
                 HBox boxSeat = new HBox();
                 HBox boxClass = new HBox();
 
-                this.flightnumberText = new Text("Flight ID: ");
+                this.flightnumberText = new Text("Flight Ref: ");
                 this.desLocText = new Text("Destination: ");
                 this.depLocText = new Text("Departure: ");
                 this.depTimeText = new Text("Departure time: ");
@@ -86,19 +89,19 @@ public class BookingDisplay extends VBox {
                 // Event handler and controller calls
 
                 this.classSelector.setOnAction(e -> {
-                        this.controller.updateAvaiSeat();
+                        this.bkDbController.updateAvaiSeat();
                 });
 
                 this.bookingButton.setOnMouseClicked(e -> {
-                        this.controller.bookFlight();
+                        this.bkDbController.bookFlight();
                 });
 
                 this.bookingButton.setOnMouseEntered(e -> {
-                        this.controller.hoverBookingButton();
+                        this.bkDbController.hoverBookingButton();
                 });
 
                 this.bookingButton.setOnMouseExited(e -> {
-                        this.controller.resetHoverBookingButton();
+                        this.bkDbController.resetHoverBookingButton();
                 });
 
         }
@@ -155,6 +158,10 @@ public class BookingDisplay extends VBox {
 
         public Button getBookingButton() {
                 return bookingButton;
+        }
+
+        public BookingDisplayController getBkDbController() {
+                return bkDbController;
         }
 
 }

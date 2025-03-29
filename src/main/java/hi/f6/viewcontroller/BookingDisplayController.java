@@ -1,6 +1,7 @@
 package hi.f6.viewcontroller;
 
 import hi.f6.gui.BookingDisplay;
+import hi.f6.models.Flight;
 
 public class BookingDisplayController {
 
@@ -19,6 +20,20 @@ public class BookingDisplayController {
     }
 
     public void updateAvaiSeat() {
+
+    }
+
+    public void updateInfoFlightOnClick(Flight flight) {
+        this.view.getFlightnumberText().setText("Flight Ref: " + flight.getFlightRef());
+        this.view.getDesLocText().setText("Destination: " + flight.getDestinationCity());
+        this.view.getDepLocText().setText("Departure: " + flight.getDepartureCity());
+        this.view.getDepTimeText().setText("Departure time: " + flight.getDepartureTime().toString());
+        this.view.getArrTimeText().setText("Arrival time: " + flight.getArrivalTime().toString());
+        this.view.getPriceText().setText("Price: " + flight.getPrice());
+        this.view.getDurationText().setText("Duration: " + flight.getDuration());
+        this.view.getLayoverText().setText("Layover: " + flight.getLayovers());
+        this.view.getCfootpText().setText("Carbone footprint: " + flight.getCarbonFootprint());
+        this.view.getNbSeatAvaibText().setText("Available seat: " + flight.getSeats().length);
 
     }
 
