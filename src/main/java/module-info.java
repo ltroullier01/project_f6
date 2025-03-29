@@ -1,7 +1,10 @@
 module hi.f6 {
-    requires javafx.controls;
-    requires javafx.graphics;
-    requires javafx.base;
+  requires javafx.controls;
+  requires javafx.graphics;
+  requires javafx.base;
+  requires java.sql;
 
-    exports hi.f6;
+  opens hi.f6.models to javafx.base;
+
+  exports hi.f6 ;
 }

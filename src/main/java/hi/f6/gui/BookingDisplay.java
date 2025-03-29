@@ -1,5 +1,6 @@
 package hi.f6.gui;
 
+import hi.f6.models.Flight;
 import hi.f6.viewcontroller.BookingDisplayController;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
@@ -12,149 +13,161 @@ import javafx.scene.text.Text;
 
 public class BookingDisplay extends VBox {
 
-        BookingDisplayController controller;
+  BookingDisplayController controller;
 
-        Text flightnumberText;
-        Text desLocText;
-        Text depLocText;
+  Text flightnumberText;
+  Text desLocText;
+  Text depLocText;
 
-        Text depTimeText;
-        Text arrTimeText;
-        Text priceText;
-        Text durationText;
-        Text layoverText;
-        Text cfootpText;
-        Text nbSeatAvaibText;
+  Text depTimeText;
+  Text arrTimeText;
+  Text priceText;
+  Text durationText;
+  Text layoverText;
+  Text cfootpText;
+  Text nbSeatAvaibText;
 
-        ChoiceBox classSelector;
-        ChoiceBox seatSelector;
+  ChoiceBox<String> classSelector;
+  ChoiceBox<String> seatSelector;
 
-        Button bookingButton;
+  Button bookingButton;
 
-        public BookingDisplay() {
+  public BookingDisplay() {
+    // Component initialisation and creation
 
-                // Component initialisation and creation
+    this.controller = new BookingDisplayController(this);
 
-                this.controller = new BookingDisplayController(this);
+    this.setSpacing(13);
 
-                this.setSpacing(13);
+    HBox alignmentBoxFnb = new HBox();
+    HBox alignmentBoxBook = new HBox();
+    HBox boxSeat = new HBox();
+    HBox boxClass = new HBox();
 
-                HBox alignmentBoxFnb = new HBox();
-                HBox alignmentBoxBook = new HBox();
-                HBox boxSeat = new HBox();
-                HBox boxClass = new HBox();
+    this.flightnumberText = new Text("Flight ID: ");
+    this.desLocText = new Text("Destination: ");
+    this.depLocText = new Text("Departure: ");
+    this.depTimeText = new Text("Departure time: ");
+    this.arrTimeText = new Text("Arrival time: ");
+    this.priceText = new Text("Price: ");
+    this.durationText = new Text("Duration: ");
+    this.layoverText = new Text("Layover: ");
+    this.cfootpText = new Text("Carbone footprint: ");
+    this.nbSeatAvaibText = new Text("Available seat: ");
 
-                this.flightnumberText = new Text("Flight ID: ");
-                this.desLocText = new Text("Destination: ");
-                this.depLocText = new Text("Departure: ");
-                this.depTimeText = new Text("Departure time: ");
-                this.arrTimeText = new Text("Arrival time: ");
-                this.priceText = new Text("Price: ");
-                this.durationText = new Text("Duration: ");
-                this.layoverText = new Text("Layover: ");
-                this.cfootpText = new Text("Carbone footprint: ");
-                this.nbSeatAvaibText = new Text("Available seat: ");
+    Text classText = new Text("Class: ");
+    Text seatText = new Text("Seat: ");
+    this.classSelector = new ChoiceBox<String>();
+    this.seatSelector = new ChoiceBox<String>();
 
-                Text classText = new Text("Class: ");
-                Text seatText = new Text("Seat: ");
-                this.classSelector = new ChoiceBox<String>();
-                this.seatSelector = new ChoiceBox<String>();
+    this.bookingButton = new Button("Book");
+    this.bookingButton.setStyle(
+        "-fx-background-color: white;" +
+        "-fx-background-radius: 8;" +
+        "-fx-border-color: lightgray;" +
+        "-fx-border-width: 1;" +
+        "-fx-padding: 8 15 8 15;"
+      );
 
-                this.bookingButton = new Button("Book");
-                this.bookingButton.setStyle(
-                                "-fx-background-color: white;" +
-                                                "-fx-background-radius: 8;" +
-                                                "-fx-border-color: lightgray;" +
-                                                "-fx-border-width: 1;" +
-                                                "-fx-padding: 8 15 8 15;");
+    // Add to the view
 
-                // Add to the view
+    alignmentBoxFnb.getChildren().add(flightnumberText);
+    alignmentBoxFnb.setAlignment(Pos.CENTER);
+    alignmentBoxBook.getChildren().add(bookingButton);
+    alignmentBoxBook.setAlignment(Pos.CENTER);
 
-                alignmentBoxFnb.getChildren().add(flightnumberText);
-                alignmentBoxFnb.setAlignment(Pos.CENTER);
-                alignmentBoxBook.getChildren().add(bookingButton);
-                alignmentBoxBook.setAlignment(Pos.CENTER);
+    boxClass.getChildren().addAll(classText, classSelector);
+    boxSeat.getChildren().addAll(seatText, seatSelector);
 
-                boxClass.getChildren().addAll(classText, classSelector);
-                boxSeat.getChildren().addAll(seatText, seatSelector);
+    this.getChildren()
+      .addAll(
+        alignmentBoxFnb,
+        depLocText,
+        desLocText,
+        depTimeText,
+        arrTimeText,
+        durationText,
+        layoverText,
+        cfootpText,
+        boxClass,
+        nbSeatAvaibText,
+        boxSeat,
+        priceText,
+        alignmentBoxBook
+      );
 
-                this.getChildren().addAll(
-                                alignmentBoxFnb, depLocText, desLocText, depTimeText, arrTimeText,
-                                durationText, layoverText, cfootpText, boxClass, nbSeatAvaibText, boxSeat, priceText,
-                                alignmentBoxBook);
+    // Event handler and controller calls
 
-                // Event handler and controller calls
+    this.classSelector.setItems(FXCollections.observableArrayList());
 
-                this.classSelector.setOnAction(e -> {
-                        this.controller.updateAvaiSeat();
-                });
+    this.bookingButton.setOnMouseClicked(e -> {
+        this.controller.bookFlight();
+      });
 
-                this.bookingButton.setOnMouseClicked(e -> {
-                        this.controller.bookFlight();
-                });
+    this.bookingButton.setOnMouseEntered(e -> {
+        this.controller.hoverBookingButton();
+      });
 
-                this.bookingButton.setOnMouseEntered(e -> {
-                        this.controller.hoverBookingButton();
-                });
+    this.bookingButton.setOnMouseExited(e -> {
+        this.controller.resetHoverBookingButton();
+      });
+  }
 
-                this.bookingButton.setOnMouseExited(e -> {
-                        this.controller.resetHoverBookingButton();
-                });
+  // Getter
 
-        }
+  public BookingDisplayController getController() {
+    return controller;
+  }
 
-        // Getter
+  public Text getFlightnumberText() {
+    return flightnumberText;
+  }
 
-        public Text getFlightnumberText() {
-                return flightnumberText;
-        }
+  public Text getDesLocText() {
+    return desLocText;
+  }
 
-        public Text getDesLocText() {
-                return desLocText;
-        }
+  public Text getDepLocText() {
+    return depLocText;
+  }
 
-        public Text getDepLocText() {
-                return depLocText;
-        }
+  public Text getDepTimeText() {
+    return depTimeText;
+  }
 
-        public Text getDepTimeText() {
-                return depTimeText;
-        }
+  public Text getArrTimeText() {
+    return arrTimeText;
+  }
 
-        public Text getArrTimeText() {
-                return arrTimeText;
-        }
+  public Text getPriceText() {
+    return priceText;
+  }
 
-        public Text getPriceText() {
-                return priceText;
-        }
+  public Text getDurationText() {
+    return durationText;
+  }
 
-        public Text getDurationText() {
-                return durationText;
-        }
+  public Text getLayoverText() {
+    return layoverText;
+  }
 
-        public Text getLayoverText() {
-                return layoverText;
-        }
+  public Text getCfootpText() {
+    return cfootpText;
+  }
 
-        public Text getCfootpText() {
-                return cfootpText;
-        }
+  public Text getNbSeatAvaibText() {
+    return nbSeatAvaibText;
+  }
 
-        public Text getNbSeatAvaibText() {
-                return nbSeatAvaibText;
-        }
+  public ChoiceBox getClassSelector() {
+    return classSelector;
+  }
 
-        public ChoiceBox getClassSelector() {
-                return classSelector;
-        }
+  public ChoiceBox getSeatSelector() {
+    return seatSelector;
+  }
 
-        public ChoiceBox getSeatSelector() {
-                return seatSelector;
-        }
-
-        public Button getBookingButton() {
-                return bookingButton;
-        }
-
+  public Button getBookingButton() {
+    return bookingButton;
+  }
 }
