@@ -1,7 +1,11 @@
 package hi.f6.viewcontroller;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 import hi.f6.gui.BookingDisplay;
 import hi.f6.models.Flight;
+import hi.f6.models.Seat;
 
 public class BookingDisplayController {
 
@@ -33,7 +37,8 @@ public class BookingDisplayController {
         this.view.getDurationText().setText("Duration: " + flight.getDuration());
         this.view.getLayoverText().setText("Layover: " + flight.getLayovers());
         this.view.getCfootpText().setText("Carbone footprint: " + flight.getCarbonFootprint());
-        this.view.getNbSeatAvaibText().setText("Available seat: " + flight.getSeats().length);
+        this.view.getNbSeatAvaibText()
+                .setText("Available seat: " + Seat.getNbPrenium(Arrays.asList(flight.getSeats())));
 
     }
 
