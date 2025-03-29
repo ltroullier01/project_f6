@@ -18,4 +18,8 @@ public class FlightDisplayController {
         this.view.getFlightTable().getItems().addAll(flight_list);
     }
 
+    public void onItemClicked(Flight flight) {
+        this.view.getParent_().getBd().getBkDbController().updateInfoFlightOnClick(flight);
+    }
+
 }

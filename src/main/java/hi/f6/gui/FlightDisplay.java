@@ -1,21 +1,28 @@
 package hi.f6.gui;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 
 import hi.f6.models.Flight;
+import hi.f6.models.Seat;
 import hi.f6.viewcontroller.FlightDisplayController;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
 public class FlightDisplay extends VBox {
 
+    MainView parent;
+
     TableView<Flight> flightTable;
     FlightDisplayController flightDisplayController;
 
-    public FlightDisplay() {
-        
+    public FlightDisplay(MainView par) {
+
+        this.parent = par;
+
         this.flightDisplayController = new FlightDisplayController(this);
         flightTable = new TableView<>();
 
@@ -42,9 +49,29 @@ public class FlightDisplay extends VBox {
 
         flightTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
-        flightTable.getItems().add(new Flight(0, "132ED22E", "Paris", "Marseille", null, null, 200, 45, 2, null, 40));
+        Seat[] seat = new Seat[3];
+        seat[0] = new Seat("null", true);
+        seat[1] = new Seat("null", true);
+        seat[2] = new Seat("null", true);
+        flightTable.getItems().add(new Flight(0, "132ED22E", "Paris", "Marseille", LocalDateTime.of(
+                2021, Month.APRIL, 24, 14, 33),
+                LocalDateTime.of(
+                        2021, Month.APRIL, 24, 18, 13),
+                200, 45, 2, seat, 40));
 
         this.getChildren().add(flightTable);
+
+        // Controller calls and event handler
+
+        flightTable.setRowFactory(tv -> {
+            TableRow<Flight> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getClickCount() == 1) {
+                    this.flightDisplayController.onItemClicked(row.getItem());
+                }
+            });
+            return row;
+        });
 
     }
 
@@ -57,6 +84,9 @@ public class FlightDisplay extends VBox {
     public FlightDisplayController getFlightDisplayController() {
         return flightDisplayController;
     }
-    
+
+    public MainView getParent_() {
+        return parent;
+    }
 
 }

@@ -47,7 +47,7 @@ public class BookingDisplay extends VBox {
                 HBox boxSeat = new HBox();
                 HBox boxClass = new HBox();
 
-                this.flightnumberText = new Text("Flight ID: ");
+                this.flightnumberText = new Text("Flight Ref: ");
                 this.desLocText = new Text("Destination: ");
                 this.depLocText = new Text("Departure: ");
                 this.depTimeText = new Text("Departure time: ");
@@ -158,6 +158,10 @@ public class BookingDisplay extends VBox {
 
         public Button getBookingButton() {
                 return bookingButton;
+        }
+
+        public BookingDisplayController getBkDbController() {
+                return bkDbController;
         }
 
 }

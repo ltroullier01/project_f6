@@ -16,7 +16,7 @@ public class MainView extends BorderPane {
     public MainView() {
         this.flightController = new FlightController();
         this.sd = new SearchDisplay(this);
-        this.fd = new FlightDisplay();
+        this.fd = new FlightDisplay(this);
         this.bd = new BookingDisplay(flightController);
 
         this.setLeft(this.sd);
@@ -26,13 +26,21 @@ public class MainView extends BorderPane {
         BorderPane.setMargin(this.bd, new Insets(0, 20, 0, 0));
     }
 
+    // GETTERS
+    public SearchDisplay getSd() {
+        return sd;
+    }
 
-    //GETTERS
-    public SearchDisplay getSd() {return sd;}
-    public FlightDisplay getFd() {return fd;}
-    public BookingDisplay getBd() {return bd;}
-    public FlightController getFlightController() {return flightController;}
+    public FlightDisplay getFd() {
+        return fd;
+    }
 
-    
+    public BookingDisplay getBd() {
+        return bd;
+    }
+
+    public FlightController getFlightController() {
+        return flightController;
+    }
 
 }
