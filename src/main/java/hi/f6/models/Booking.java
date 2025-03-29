@@ -11,7 +11,7 @@ public class Booking {
     private Flight flight;
     private Seat seat;
     private int baggage;
-    final private LocalDateTime bookingDate;
+    private LocalDateTime bookingDate;
     private Payment payment;
     private float price;
 
@@ -48,7 +48,7 @@ public class Booking {
 
     }
 
-    public Date getBookingDate(){
+    public LocalDateTime getBookingDate(){
         return bookingDate;
 
     }

@@ -7,8 +7,8 @@ public class Payment {
     final private int bookingID;
     private float amount;
     private String method;
-    final private String statu;
-    final private LocalDateTime transactionDate;
+    private String statu;
+    private LocalDateTime transactionDate;
 
     public Payment(int paymentID,int bookingID,String method,String statu,LocalDateTime transactionDate){
         this.paymentID=paymentID;
