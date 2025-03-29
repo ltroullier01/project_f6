@@ -6,16 +6,21 @@ import java.util.ArrayList;
 
 public class Booking {
 
-    private int bookingID;
+    final private int bookingID;
     private User user;
     private Flight flight;
     private Seat seat;
     private int baggage;
-    private LocalDateTime bookingDate;
+    final private LocalDateTime bookingDate;
     private Payment payment;
     private float price;
 
 
+    public Booking(int bookingID, LocalDateTime bookingDate){
+        this.bookingID=bookingID;
+        this.bookingDate=bookingDate;
+
+    }
     //Get functions
 
     public int getBookingID(){

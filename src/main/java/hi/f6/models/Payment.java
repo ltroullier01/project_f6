@@ -3,12 +3,20 @@ package hi.f6.models;
 import java.time.LocalDateTime;
 
 public class Payment {
-    private int paymentID;
-    private int bookingID;
+    final private int paymentID;
+    final private int bookingID;
     private float amount;
     private String method;
-    private String statu;
-    private LocalDateTime transactionDate;
+    final private String statu;
+    final private LocalDateTime transactionDate;
+
+    public Payment(int paymentID,int bookingID,String method,String statu,LocalDateTime transactionDate){
+        this.paymentID=paymentID;
+        this.bookingID=bookingID;
+        this.method=method;
+        this.statu=statu;
+        this.transactionDate=transactionDate;
+    }
 
     public int getPaymentID(){
         return paymentID;
