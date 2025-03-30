@@ -10,46 +10,44 @@ public class UserController {
     private ArrayList<User> users;
     private ArrayList<PassengerReview> passengerReviews;
 
-    public void register(User user){
-        
-    }
-
-    public void unregister(User user){
+    public void register(User user) {
 
     }
 
-    public boolean login(User user){
+    public void unregister(User user) {
 
     }
 
-    public boolean logout(User user){
+    public boolean login(User user) {
+        return true;
+    }
+
+    public boolean logout(User user) {
+        return true;
+    }
+
+    public void addUser(User user) {
 
     }
 
-    public void addUser(User user){
-
-    }
-    
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
 
     }
 
-    public ArrayList<User> getUsers(){
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public void addPassengerReview(PassengerReview passengerReview){
+    public void addPassengerReview(PassengerReview passengerReview) {
 
     }
 
-    public void deletePassengerReview(PassengerReview passengerReview){
-        
+    public void deletePassengerReview(PassengerReview passengerReview) {
+
     }
 
-    public ArrayList<PassengerReview> getPassengerReviews(){
+    public ArrayList<PassengerReview> getPassengerReviews() {
         return passengerReviews;
     }
 
-    
-    
 }

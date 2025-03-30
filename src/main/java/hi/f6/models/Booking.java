@@ -15,111 +15,108 @@ public class Booking {
     private Payment payment;
     private float price;
 
-
-    public Booking(int bookingID, LocalDateTime bookingDate){
-        this.bookingID=bookingID;
-        this.bookingDate=bookingDate;
+    public Booking(int bookingID, LocalDateTime bookingDate) {
+        this.bookingID = bookingID;
+        this.bookingDate = bookingDate;
 
     }
-    //Get functions
+    // Get functions
 
-    public int getBookingID(){
+    public int getBookingID() {
         return bookingID;
 
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
 
     }
 
-    public Flight getFlight(){
+    public Flight getFlight() {
         return flight;
 
     }
 
-    public Seat getSeat(){
+    public Seat getSeat() {
         return seat;
 
     }
 
-    public int getBaggage(){
+    public int getBaggage() {
         return baggage;
 
     }
 
-    public LocalDateTime getBookingDate(){
+    public LocalDateTime getBookingDate() {
         return bookingDate;
 
     }
 
-    public Payment getPaymnet(){
+    public Payment getPaymnet() {
         return payment;
 
     }
 
-    public float getPrice(){
+    public float getPrice() {
         return price;
 
     }
 
-    //Set functions
+    // Set functions
 
-    public void setUser(User user){
-        this.user= user; 
-
-    }
-
-    public void setFlight(Flight flight){
-        this.flight=flight;
+    public void setUser(User user) {
+        this.user = user;
 
     }
 
-    public void setSeat(Seat seat){
-        this.seat=seat;
+    public void setFlight(Flight flight) {
+        this.flight = flight;
 
     }
 
-    public void setBaggage(int baggage){
-        this.baggage=baggage;
+    public void setSeat(Seat seat) {
+        this.seat = seat;
 
     }
 
-    public void setBookingDate(LocalDateTime bookingDate){
-        this.bookingDate=bookingDate;
+    public void setBaggage(int baggage) {
+        this.baggage = baggage;
 
     }
 
-    public void setPayment(Payment payment){
+    public void setBookingDate(LocalDateTime bookingDate) {
+        this.bookingDate = bookingDate;
 
-        if(bookingID==payment.getBookingID()){
-            this.payment=payment;
-        } else{
+    }
+
+    public void setPayment(Payment payment) {
+
+        if (bookingID == payment.getBookingID()) {
+            this.payment = payment;
+        } else {
             System.out.println("BookingID does not match");
         }
 
     }
 
-    public void setPrice(Flight flight, int baggage, Seat seat){
-        
+    public void setPrice(Flight flight, int baggage, Seat seat) {
+
         float totalPrice;
         float seatPrice;
         float flightPrice = flight.getPrice();
-        float baggagePrice = baggage*1000;
+        float baggagePrice = baggage * 1000;
 
-        if (seat.getClass()=="Economy") {
-            seatPrice=1000;
-        }else{
-            seatPrice=5000;
+        if (seat.getSclass() == "eco") {
+            seatPrice = 1000;
+        } else {
+            seatPrice = 5000;
         }
 
-        totalPrice = seatPrice+flightPrice+baggagePrice;
-
+        totalPrice = seatPrice + flightPrice + baggagePrice;
 
         payment.setAmount(totalPrice);
-        this.price=totalPrice;
+        this.price = totalPrice;
 
     }
 
-    
 }
