@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 public class MainView extends BorderPane {
+    //UserDisplay ud;
     SearchDisplay sd;
     FlightDisplay fd;
     BookingDisplay bd;
@@ -34,9 +35,10 @@ public class MainView extends BorderPane {
         this.sd = new SearchDisplay(this);
         this.fd = new FlightDisplay(this);
         this.bd = new BookingDisplay(flightController);
+        //this.ud = new UserDisplay();
 
         
-
+        //this.setTop(this.ud);
         this.setLeft(this.sd);
         this.setCenter(this.fd);
         this.setRight(this.bd);
