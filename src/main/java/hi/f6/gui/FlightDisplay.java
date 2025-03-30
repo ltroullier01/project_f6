@@ -3,6 +3,7 @@ package hi.f6.gui;
 import java.time.LocalDateTime;
 import java.time.Month;
 
+import hi.f6.controllers.FlightController;
 import hi.f6.models.Flight;
 import hi.f6.models.Seat;
 import hi.f6.viewcontroller.FlightDisplayController;
@@ -18,10 +19,14 @@ public class FlightDisplay extends VBox {
 
     TableView<Flight> flightTable;
     FlightDisplayController flightDisplayController;
+    FlightController flightController;
 
-    public FlightDisplay(MainView par) {
+    Flight selectedFlight;
+
+    public FlightDisplay(MainView par, FlightController fController) {
 
         this.parent = par;
+        this.flightController = fController;
 
         this.flightDisplayController = new FlightDisplayController(this);
         flightTable = new TableView<>();
@@ -57,7 +62,8 @@ public class FlightDisplay extends VBox {
             TableRow<Flight> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 1) {
-                    this.flightDisplayController.onItemClicked(row.getItem());
+                    this.selectedFlight = row.getItem();
+                    this.flightDisplayController.onItemClicked(this.selectedFlight);
                 }
             });
             return row;
@@ -77,6 +83,10 @@ public class FlightDisplay extends VBox {
 
     public MainView getParent_() {
         return parent;
+    }
+
+    public FlightController getFlightController() {
+        return flightController;
     }
 
 }

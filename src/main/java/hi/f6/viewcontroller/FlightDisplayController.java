@@ -19,6 +19,8 @@ public class FlightDisplayController {
     }
 
     public void onItemClicked(Flight flight) {
+        flight.setSeats(this.view.getFlightController().getSeats(flight));
+        System.out.println(flight.getSeats().size());
         this.view.getParent_().getBd().getBkDbController().updateInfoFlightOnClick(flight);
     }
 

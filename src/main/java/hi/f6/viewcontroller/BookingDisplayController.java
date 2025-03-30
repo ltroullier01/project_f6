@@ -11,19 +11,34 @@ public class BookingDisplayController {
 
     BookingDisplay view;
 
+    Flight selectedFlight;
+
     public BookingDisplayController(BookingDisplay view_var) {
         this.view = view_var;
     }
 
     public void bookFlight() {
-        // Database call
+        this.view.getFlightController().bookSeat(this.view.getSeatSelector().getValue());
+        this.view.getBookingController().addBooking(this.view.getSeatSelector().getValue(), selectedFlight);
     }
 
     public void updateAvaiSeat() {
-
+        if (this.selectedFlight != null) {
+            this.view.getSeatSelector().getItems().clear();
+            if (this.view.getClassSelector().getValue() == "eco") {
+                this.view.getNbSeatAvaibText()
+                        .setText("Available seat: " + Seat.getNbEco(this.selectedFlight.getSeats()).size());
+                this.view.getSeatSelector().getItems().addAll(Seat.getNbEco(this.selectedFlight.getSeats()));
+            } else {
+                this.view.getNbSeatAvaibText()
+                        .setText("Available seat: " + Seat.getNbPrenium(this.selectedFlight.getSeats()).size());
+                this.view.getSeatSelector().getItems().addAll(Seat.getNbPrenium(this.selectedFlight.getSeats()));
+            }
+        }
     }
 
     public void updateInfoFlightOnClick(Flight flight) {
+        this.selectedFlight = flight;
         this.view.getFlightnumberText().setText("Flight Ref: " + flight.getFlightRef());
         this.view.getDesLocText().setText("Destination: " + flight.getDestinationCity());
         this.view.getDepLocText().setText("Departure: " + flight.getDepartureCity());
@@ -33,13 +48,7 @@ public class BookingDisplayController {
         this.view.getDurationText().setText("Duration: " + flight.getDuration());
         this.view.getLayoverText().setText("Layover: " + flight.getLayovers());
         this.view.getCfootpText().setText("Carbone footprint: " + flight.getCarbonFootprint());
-        if (this.view.getClassSelector().getValue() == "eco") {
-            this.view.getNbSeatAvaibText()
-                    .setText("Available seat: " + Seat.getNbEco(flight.getSeats()));
-        } else {
-            this.view.getNbSeatAvaibText()
-                    .setText("Available seat: " + Seat.getNbPrenium(flight.getSeats()));
-        }
+        updateAvaiSeat();
 
     }
 

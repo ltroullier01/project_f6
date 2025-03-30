@@ -6,23 +6,28 @@ import java.util.stream.Collectors;
 
 public class Seat {
 
+  private int id;
+  private int flight_id;
   private String seatNumber;
   private String sclass;
 
   private boolean isAvailable;
 
-  public Seat(String seatNumber, boolean isAvailable) {
+  public Seat(int id_var, int fl_id, String seatNumber, boolean isAvailable, String claString) {
+    this.id = id_var;
+    this.flight_id = fl_id;
     this.seatNumber = seatNumber;
     this.isAvailable = isAvailable;
-    this.sclass = "prem";
+    this.sclass = claString;
   }
 
-  public static int getNbEco(List<Seat> seats) {
-    return seats.stream().filter(seat -> seat.getSclass() == "eco").collect(Collectors.toList()).size();
+  public static List<Seat> getNbEco(List<Seat> seats) {
+    return seats.stream().filter(seat -> (seat.getSclass().equals("eco") && seat.isAvailable()))
+        .collect(Collectors.toList());
   }
 
-  public static int getNbPrenium(List<Seat> seats) {
-    return seats.stream().filter(seat -> seat.getSclass() == "prem").collect(Collectors.toList()).size();
+  public static List<Seat> getNbPrenium(List<Seat> seats) {
+    return seats.stream().filter(seat -> seat.getSclass().equals("prem")).collect(Collectors.toList());
 
   }
 
@@ -32,6 +37,14 @@ public class Seat {
 
   public String getSclass() {
     return sclass;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public int getFlight_id() {
+    return flight_id;
   }
 
   public boolean isAvailable() {
@@ -45,4 +58,10 @@ public class Seat {
   public void setAvailable(boolean available) {
     isAvailable = available;
   }
+
+  @Override
+  public String toString() {
+    return seatNumber;
+  }
+
 }

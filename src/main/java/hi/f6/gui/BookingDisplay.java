@@ -1,6 +1,8 @@
 package hi.f6.gui;
 
+import hi.f6.controllers.BookingController;
 import hi.f6.controllers.FlightController;
+import hi.f6.models.Flight;
 import hi.f6.models.Seat;
 import hi.f6.viewcontroller.BookingDisplayController;
 import javafx.collections.FXCollections;
@@ -16,6 +18,7 @@ public class BookingDisplay extends VBox {
 
         BookingDisplayController bkDbController;
         FlightController flightController;
+        BookingController bookingController;
 
         Text flightnumberText;
         Text desLocText;
@@ -34,12 +37,13 @@ public class BookingDisplay extends VBox {
 
         Button bookingButton;
 
-        public BookingDisplay(FlightController fl_cont) {
+        public BookingDisplay(FlightController fl_cont, BookingController bController) {
 
                 // Component initialisation and creation
 
                 this.bkDbController = new BookingDisplayController(this);
                 this.flightController = fl_cont;
+                this.bookingController = bController;
 
                 this.setSpacing(13);
 
@@ -64,6 +68,7 @@ public class BookingDisplay extends VBox {
 
                 String st[] = { "eco", "prem" };
                 this.classSelector = new ChoiceBox<String>(FXCollections.observableArrayList(st));
+                this.classSelector.setValue("eco");
 
                 this.seatSelector = new ChoiceBox<Seat>();
 
@@ -93,6 +98,7 @@ public class BookingDisplay extends VBox {
                 // Event handler and controller calls
 
                 this.classSelector.setOnAction(e -> {
+                        System.out.println("hey");
                         this.bkDbController.updateAvaiSeat();
                 });
 
@@ -166,6 +172,14 @@ public class BookingDisplay extends VBox {
 
         public BookingDisplayController getBkDbController() {
                 return bkDbController;
+        }
+
+        public FlightController getFlightController() {
+                return flightController;
+        }
+
+        public BookingController getBookingController() {
+                return bookingController;
         }
 
 }

@@ -26,8 +26,7 @@ public class FlightController {
     this.seats = new ArrayList<>();
   }
 
-
-  //FLIGHT CONTROLLER
+  // FLIGHT CONTROLLER
   public void addFlight(Flight flight) {
     flights.add(flight);
   }
@@ -40,36 +39,31 @@ public class FlightController {
     return flights.toArray(new Flight[0]);
   }
 
-  public List<Flight> search(String departureCity, String arrivalCity, LocalDate departureDate, LocalDate ArrivalDate){
+  public List<Flight> search(String departureCity, String arrivalCity, LocalDate departureDate, LocalDate ArrivalDate) {
     List<Flight> listeFlight = new ArrayList<>();
     listeFlight = flightDB.search(departureCity, arrivalCity, departureDate, ArrivalDate);
     return listeFlight;
   }
 
-  public List<Flight> searchWithoutDepartureCity(String arrivalCity, LocalDate departureDate, LocalDate ArrivalDate){
+  public List<Flight> searchWithoutDepartureCity(String arrivalCity, LocalDate departureDate, LocalDate ArrivalDate) {
     List<Flight> listeFlight = new ArrayList<>();
     listeFlight = flightDB.searchWithoutDepartureCity(arrivalCity, departureDate, ArrivalDate);
     return listeFlight;
   }
 
-  public List<Flight> searchWithoutArrivalCity(String departureCity, LocalDate departureDate, LocalDate ArrivalDate){
+  public List<Flight> searchWithoutArrivalCity(String departureCity, LocalDate departureDate, LocalDate ArrivalDate) {
     List<Flight> listeFlight = new ArrayList<>();
     listeFlight = flightDB.searchWithoutArrivalCity(departureCity, departureDate, ArrivalDate);
     return listeFlight;
   }
 
-  public List<Flight> searchWithoutDepartureAndArrivalCity(LocalDate departureDate, LocalDate ArrivalDate){
+  public List<Flight> searchWithoutDepartureAndArrivalCity(LocalDate departureDate, LocalDate ArrivalDate) {
     List<Flight> listeFlight = new ArrayList<>();
     listeFlight = flightDB.searchWithoutDepartureAndArrivalCity(departureDate, ArrivalDate);
     return listeFlight;
   }
 
-
-
-
-
-
-  //SEAT CONTROLLER
+  // SEAT CONTROLLER
 
   public void addSeat(Seat seat) {
     seats.add(seat);
@@ -79,18 +73,12 @@ public class FlightController {
     seats.remove(seat);
   }
 
-  public Seat[] getSeats() {
-    return seats.toArray(new Seat[0]);
+  public List<Seat> getSeats(Flight flight) {
+    return seatDB.getSeatOfFlight(flight);
   }
 
   public void bookSeat(Seat seat) {
-    if (seats.contains(seat) && seat.isAvailable()) {
-      seat.setAvailable(false);
-      System.out.println(
-        "Seat " + seat.getSeatNumber() + " booked successfully."
-      );
-    } else {
-      System.out.println("Seat is either not found or already booked.");
-    }
+    seatDB.bookSeat();
   }
+
 }

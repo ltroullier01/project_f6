@@ -2,6 +2,7 @@ package hi.f6.gui;
 
 import java.sql.Connection;
 
+import hi.f6.controllers.BookingController;
 import hi.f6.controllers.FlightController;
 import hi.f6.database.Util;
 import javafx.geometry.Insets;
@@ -11,18 +12,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 public class MainView extends BorderPane {
-    //UserDisplay ud;
+    // UserDisplay ud;
     SearchDisplay sd;
     FlightDisplay fd;
     BookingDisplay bd;
     FlightController flightController;
+    BookingController bookingController;
     Util util;
     Connection con;
 
     public MainView() {
         this.util = new Util();
         this.con = this.util.getConnectionClement();
-        if (this.con == null){
+        if (this.con == null) {
             this.con = this.util.getConnectionLael();
         }
         if (this.con != null) {
@@ -32,13 +34,13 @@ public class MainView extends BorderPane {
         }
 
         this.flightController = new FlightController(this.con);
+        this.bookingController = new BookingController(con);
         this.sd = new SearchDisplay(this);
-        this.fd = new FlightDisplay(this);
-        this.bd = new BookingDisplay(flightController);
-        //this.ud = new UserDisplay();
+        this.fd = new FlightDisplay(this, flightController);
+        this.bd = new BookingDisplay(flightController, bookingController);
+        // this.ud = new UserDisplay();
 
-        
-        //this.setTop(this.ud);
+        // this.setTop(this.ud);
         this.setLeft(this.sd);
         this.setCenter(this.fd);
         this.setRight(this.bd);

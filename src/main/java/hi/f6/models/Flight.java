@@ -86,7 +86,7 @@ public class Flight {
   }
 
   public List<Seat> getSeats() {
-    return seats;
+    return this.seats;
   }
 
   public float getCarbonFootprint() {
