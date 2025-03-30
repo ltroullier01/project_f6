@@ -1,0 +1,35 @@
+# Java class files
+*.class
+
+# Maven target directory
+/target/
+
+# Logs
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# JavaFX cache
+.fxdata/
+
+# Build and dependency folders
+bin/
+build/
+
+
+# Mac/Linux hidden files
+.*.swp
+*~
+
+# JetBrains Rider
+.idea/
+*.sln
+*.user

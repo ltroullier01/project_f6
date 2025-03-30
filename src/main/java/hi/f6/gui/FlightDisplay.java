@@ -1,92 +1,82 @@
 package hi.f6.gui;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-
 import hi.f6.models.Flight;
-import hi.f6.models.Seat;
-import hi.f6.viewcontroller.FlightDisplayController;
+import java.util.function.Consumer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class FlightDisplay extends VBox {
 
-    MainView parent;
+  private TableView<Flight> flightTable;
+  private ObservableList<Flight> flightList;
+  private Consumer<Flight> onFlightSelected;
 
-    TableView<Flight> flightTable;
-    FlightDisplayController flightDisplayController;
+  public FlightDisplay() {
+    Text title = new Text("Available Flights");
+    title.setFont(new Font(20));
 
-    public FlightDisplay(MainView par) {
+    flightTable = new TableView<>();
+    flightList = FXCollections.observableArrayList();
 
-        this.parent = par;
+    // Table columns
+    TableColumn<Flight, Integer> idCol = new TableColumn<>("ID");
+    idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
 
-        this.flightDisplayController = new FlightDisplayController(this);
-        flightTable = new TableView<>();
+    TableColumn<Flight, String> depCol = new TableColumn<>("From");
+    depCol.setCellValueFactory(new PropertyValueFactory<>("departureCity"));
 
-        TableColumn<Flight, String> column1 = new TableColumn<>("Reference");
-        column1.setCellValueFactory(new PropertyValueFactory<>("flightRef"));
+    TableColumn<Flight, String> destCol = new TableColumn<>("To");
+    destCol.setCellValueFactory(new PropertyValueFactory<>("destinationCity"));
 
-        TableColumn<Flight, String> column2 = new TableColumn<>("Departure");
-        column2.setCellValueFactory(new PropertyValueFactory<>("departureCity"));
+    TableColumn<Flight, String> depTimeCol = new TableColumn<>("Departure");
+    depTimeCol.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
 
-        TableColumn<Flight, String> column3 = new TableColumn<>("Destination");
-        column3.setCellValueFactory(new PropertyValueFactory<>("destinationCity"));
+    TableColumn<Flight, String> arrTimeCol = new TableColumn<>("Arrival");
+    arrTimeCol.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
 
-        TableColumn<Flight, LocalDateTime> column4 = new TableColumn<>("Departure Time");
-        column4.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
+    TableColumn<Flight, Float> priceCol = new TableColumn<>("Price");
+    priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        TableColumn<Flight, Float> column5 = new TableColumn<>("Price");
-        column5.setCellValueFactory(new PropertyValueFactory<>("price"));
+    flightTable
+      .getColumns()
+      .addAll(idCol, depCol, destCol, depTimeCol, arrTimeCol, priceCol);
 
-        flightTable.getColumns().add(column1);
-        flightTable.getColumns().add(column2);
-        flightTable.getColumns().add(column3);
-        flightTable.getColumns().add(column4);
-        flightTable.getColumns().add(column5);
+    // Configure table
+    flightTable.setItems(flightList);
+    flightTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    flightTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        flightTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+    flightTable
+      .getSelectionModel()
+      .selectedItemProperty()
+      .addListener((obs, oldSelection, newSelection) -> {
+        if (newSelection != null && onFlightSelected != null) {
+          onFlightSelected.accept(newSelection);
+        }
+      });
 
-        Seat[] seat = new Seat[3];
-        seat[0] = new Seat("null", true);
-        seat[1] = new Seat("null", true);
-        seat[2] = new Seat("null", true);
-        flightTable.getItems().add(new Flight(0, "132ED22E", "Paris", "Marseille", LocalDateTime.of(
-                2021, Month.APRIL, 24, 14, 33),
-                LocalDateTime.of(
-                        2021, Month.APRIL, 24, 18, 13),
-                200, 45, 2, seat, 40));
+    this.setSpacing(10);
+    this.getChildren().addAll(title, flightTable);
+  }
 
-        this.getChildren().add(flightTable);
+  // Public method to populate flights
+  public void setFlights(ObservableList<Flight> flights) {
+    this.flightList.setAll(flights);
+  }
 
-        // Controller calls and event handler
+  // Get selected flight
+  public Flight getSelectedFlight() {
+    return flightTable.getSelectionModel().getSelectedItem();
+  }
 
-        flightTable.setRowFactory(tv -> {
-            TableRow<Flight> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (!row.isEmpty() && event.getClickCount() == 1) {
-                    this.flightDisplayController.onItemClicked(row.getItem());
-                }
-            });
-            return row;
-        });
-
-    }
-
-    // Getters
-
-    public TableView<Flight> getFlightTable() {
-        return flightTable;
-    }
-
-    public FlightDisplayController getFlightDisplayController() {
-        return flightDisplayController;
-    }
-
-    public MainView getParent_() {
-        return parent;
-    }
-
+  public void setOnFlightSelected(Consumer<Flight> callback) {
+    this.onFlightSelected = callback;
+  }
 }

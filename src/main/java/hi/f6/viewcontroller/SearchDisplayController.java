@@ -1,76 +1,119 @@
 package hi.f6.viewcontroller;
 
+import hi.f6.gui.FlightDisplay;
+import hi.f6.gui.SearchDisplay;
+import hi.f6.middleware.DatabaseUtil;
+import hi.f6.models.Flight;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import hi.f6.controllers.FlightController;
-import hi.f6.gui.SearchDisplay;
-import hi.f6.models.Flight;
-import hi.f6.models.Seat;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class SearchDisplayController {
 
-    // Innitialization of attributs
-    private SearchDisplay searchDisplay;
-    private FlightController flightController;
+  //private FlightController flightController;
+  private SearchDisplay searchDisplay;
+  private FlightDisplay flightDisplay;
 
-    // Constructor
-    public SearchDisplayController(SearchDisplay searchDisplay_var, FlightController flightController_var) {
-        this.searchDisplay = searchDisplay_var;
-        this.flightController = flightController_var;
+  public SearchDisplayController(
+    SearchDisplay searchDisplay_var
+    /*,FlightController flightController_var*/
+  ) {
+    this.searchDisplay = searchDisplay_var;
+    //this.flightController = flightController_var;
+  }
+
+  public void setFlightDisplay(FlightDisplay flightDisplay) {
+    this.flightDisplay = flightDisplay;
+  }
+
+  public void search() {
+    String departureCity = this.searchDisplay.getTf_departureCity().getText();
+    String arrivalCity = this.searchDisplay.getTf_destinationCity().getText();
+    LocalDate departureDate =
+      this.searchDisplay.getDp_departureTime().getValue();
+    LocalDate arrivalDate = this.searchDisplay.getDp_arrivalTime().getValue();
+
+    if (departureCity == "" || departureCity.equals("From")) {
+      //this.flightController.searchWithoutDepartureCity();
+      System.out.println("rien");
+    }
+    if (arrivalCity == "" || arrivalCity.equals("To")) {
+      //this.flightController.searchWithoutArrivalCity();
+      System.out.println("rien");
+    }
+    if (
+      (departureCity == "" || departureCity.equals("From")) &&
+      (arrivalCity == "" || arrivalCity.equals("To"))
+    ) {
+      //this.flightController.searchWithoutDepartureAndArrivalCity();
     }
 
-    // Search methid depending on the different cases
-    public List<Flight> search() {
+    String from = this.searchDisplay.getTf_departureCity().getText().trim();
+    String to = this.searchDisplay.getTf_destinationCity().getText().trim();
+    LocalDate depDate = this.searchDisplay.getDp_departureTime().getValue();
 
-        // Recovery of values
-        String departureCity = this.searchDisplay.getTf_departureCity().getText();
-        String arrivalCity = this.searchDisplay.getTf_destinationCity().getText();
-        LocalDate departureDate = this.searchDisplay.getDp_departureTime().getValue();
-        LocalDate arrivalDate = this.searchDisplay.getDp_arrivalTime().getValue();
+    ObservableList<Flight> matchingFlights = FXCollections.observableArrayList();
 
-        List<Flight> searchResult = new ArrayList<>();
+    StringBuilder sql = new StringBuilder("SELECT * FROM Flight WHERE ");
+    List<Object> params = new ArrayList<>();
 
-        // Verification of the case
-        if ((departureCity == "" || departureCity.equals("From")) && (arrivalCity == "" || arrivalCity.equals("To"))) {
-            searchResult = this.flightController.searchWithoutDepartureAndArrivalCity(departureDate, arrivalDate);
-            System.out.println("Without Departure & Arrival");
-        } else if (departureCity == "" || departureCity.equals("From")) {
-            searchResult = this.flightController.searchWithoutDepartureCity(arrivalCity, departureDate, arrivalDate);
-            System.out.println("Without Departure");
-            System.out.println("Destination : " + arrivalCity);
-        } else if (arrivalCity == "" || arrivalCity.equals("To")) {
-            searchResult = this.flightController.searchWithoutArrivalCity(departureCity, departureDate, arrivalDate);
-            System.out.println("Without Arrival");
-            System.out.println("Departure : " + departureCity);
-        } else {
-            searchResult = this.flightController.search(departureCity, arrivalCity, departureDate, arrivalDate);
-            System.out.println("Departure : " + departureCity);
-            System.out.println("Destination : " + arrivalCity);
-        }
-        System.out.println(departureDate);
-        System.out.println(arrivalDate);
+    sql.append("departureTime BETWEEN ? AND ? ");
 
-        Seat[] seat0 = new Seat[2];
-        seat0[0] = new Seat("null", true);
-        seat0[1] = new Seat("null", true);
+    LocalDateTime fromDate = depDate.atStartOfDay().minusDays(7);
+    LocalDateTime toDate = depDate.atTime(LocalTime.MAX).plusDays(7);
+    params.add(Timestamp.valueOf(fromDate));
+    params.add(Timestamp.valueOf(toDate));
+    // System.out.println(fromDate);
 
-        Seat[] seat1 = new Seat[1];
-        seat1[0] = new Seat("null", true);
-
-        searchResult.add(new Flight(0, "152TR22E", "Prague", "Marseille", LocalDateTime.of(
-                2012, Month.MARCH, 12, 19, 33),
-                LocalDateTime.of(
-                        2013, Month.DECEMBER, 4, 8, 1),
-                9000, 45, 2, seat0, 40));
-        searchResult.add(new Flight(0, "132PL67E", "Prague", "Lille", LocalDateTime.of(
-                2021, Month.JANUARY, 24, 14, 33),
-                LocalDateTime.of(
-                        2021, Month.JULY, 18, 8, 43),
-                20, 45, 2, seat1, 40));
-        return searchResult;
+    if (!from.isBlank() && !from.equalsIgnoreCase("From")) {
+      sql.append("AND departureCity = ? ");
+      params.add(from);
     }
+
+    if (!to.isBlank() && !to.equalsIgnoreCase("To")) {
+      sql.append("AND destinationCity = ? ");
+      params.add(to);
+    }
+
+    try (
+      Connection conn = DatabaseUtil.getConnection();
+      PreparedStatement stmt = conn.prepareStatement(sql.toString())
+    ) {
+      for (int i = 0; i < params.size(); i++) {
+        stmt.setObject(i + 1, params.get(i));
+      }
+
+      ResultSet rs = stmt.executeQuery();
+      while (rs.next()) {
+        Flight flight = new Flight(rs.getInt("flightID"));
+        flight.setDepartureCity(rs.getString("departureCity"));
+        flight.setDestinationCity(rs.getString("destinationCity"));
+        flight.setDepartureTime(
+          rs.getTimestamp("departureTime").toLocalDateTime()
+        );
+        flight.setArrivalTime(rs.getTimestamp("arrivalTime").toLocalDateTime());
+        flight.setPrice(rs.getFloat("price"));
+        flight.setDuration(rs.getInt("duration"));
+        flight.setLayovers(rs.getInt("layovers"));
+        flight.setCarbonFootprint(rs.getFloat("carbonFootprint"));
+        matchingFlights.add(flight);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    if (flightDisplay != null) {
+      flightDisplay.setFlights(matchingFlights);
+    }
+
+    System.out.println(departureCity);
+    System.out.println(arrivalCity);
+    System.out.println(departureDate);
+    System.out.println(arrivalDate);
+  }
 }

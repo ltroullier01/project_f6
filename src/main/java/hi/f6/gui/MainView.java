@@ -8,39 +8,25 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 public class MainView extends BorderPane {
-    SearchDisplay sd;
-    FlightDisplay fd;
-    BookingDisplay bd;
-    FlightController flightController;
 
-    public MainView() {
-        this.flightController = new FlightController();
-        this.sd = new SearchDisplay(this);
-        this.fd = new FlightDisplay(this);
-        this.bd = new BookingDisplay(flightController);
+  SearchDisplay sd;
+  FlightDisplay fd;
+  BookingDisplay bd;
 
-        this.setLeft(this.sd);
-        this.setCenter(this.fd);
-        this.setRight(this.bd);
+  public MainView() {
+    this.sd = new SearchDisplay();
+    this.fd = new FlightDisplay();
+    this.bd = new BookingDisplay();
 
-        BorderPane.setMargin(this.bd, new Insets(0, 20, 0, 0));
-    }
+    this.setLeft(this.sd);
+    this.setCenter(this.fd);
+    this.setRight(this.bd);
 
-    // GETTERS
-    public SearchDisplay getSd() {
-        return sd;
-    }
+    this.sd.controller.setFlightDisplay(this.fd);
+    this.fd.setOnFlightSelected(flight ->
+        this.bd.getController().updateFlightInfoOnClick(flight)
+      );
 
-    public FlightDisplay getFd() {
-        return fd;
-    }
-
-    public BookingDisplay getBd() {
-        return bd;
-    }
-
-    public FlightController getFlightController() {
-        return flightController;
-    }
-
+    BorderPane.setMargin(this.bd, new Insets(0, 20, 0, 0));
+  }
 }
