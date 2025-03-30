@@ -1,5 +1,6 @@
 package hi.f6.controllers;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import hi.f6.models.PassengerReview;
@@ -7,8 +8,13 @@ import hi.f6.models.User;
 
 public class UserController {
 
+    private Connection con;
     private ArrayList<User> users;
     private ArrayList<PassengerReview> passengerReviews;
+
+    public UserController(Connection con_var){
+        this.con = con_var;
+    }
 
     public void register(User user) {
 

@@ -1,18 +1,27 @@
 package hi.f6.controllers;
 
+import hi.f6.database.FlightDB;
+import hi.f6.database.SeatDB;
 import hi.f6.models.Flight;
 import hi.f6.models.Seat;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlightController {
 
+  private Connection con;
+  private FlightDB flightDB;
+  private SeatDB seatDB;
   private ArrayList<Flight> flights;
   private ArrayList<Seat> seats;
 
-  public FlightController() {
+  public FlightController(Connection con_var) {
+    this.con = con_var;
+    this.flightDB = new FlightDB(this.con);
+    this.seatDB = new SeatDB(this.con);
     this.flights = new ArrayList<>();
     this.seats = new ArrayList<>();
   }

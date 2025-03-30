@@ -16,21 +16,23 @@ public class MainView extends BorderPane {
     BookingDisplay bd;
     FlightController flightController;
     Util util;
-    Connection conn;
+    Connection con;
 
     public MainView() {
-        this.flightController = new FlightController();
-        this.sd = new SearchDisplay(this);
-        this.fd = new FlightDisplay(this);
-        this.bd = new BookingDisplay(flightController);
-
         this.util = new Util();
-        this.conn = this.util.getConnection();
-        if (this.conn != null) {
+        this.con = this.util.getConnection();
+        if (this.con != null) {
             System.out.println("Connexion réussie !");
         } else {
             System.out.println("Échec de la connexion.");
         }
+
+        this.flightController = new FlightController(this.con);
+        this.sd = new SearchDisplay(this);
+        this.fd = new FlightDisplay(this);
+        this.bd = new BookingDisplay(flightController);
+
+        
 
         this.setLeft(this.sd);
         this.setCenter(this.fd);
