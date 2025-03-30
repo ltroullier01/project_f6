@@ -22,7 +22,6 @@ public class SearchDisplay extends VBox {
 
   // Innitialization of attributs
   private MainView mainView;
-  private Text t_title;
   private TextField tf_departureCity;
   private TextField tf_destinationCity;
   private DatePicker dp_departureTime;
@@ -39,8 +38,11 @@ public class SearchDisplay extends VBox {
     this.controller = new SearchDisplayController(this, this.mainView.getFlightController());
 
     // Title of the section
-    this.t_title = new Text("Flight Reasearch");
-    this.t_title.setFont(new Font(30));
+    HBox title = new HBox();
+    Text t_title = new Text("Flight Reasearch");
+    t_title.setFont(new Font(20));
+    title.setAlignment(Pos.CENTER);
+    title.getChildren().addAll(t_title);
 
     // Departure City components
     this.tf_departureCity = new TextField("From");
@@ -92,7 +94,7 @@ public class SearchDisplay extends VBox {
     this.setSpacing(20);
     this.getChildren()
       .addAll(
-        this.t_title,
+        title,
         departureCityChoice,
         arrivalCityChoice,
         departureHourChoice,
@@ -102,7 +104,6 @@ public class SearchDisplay extends VBox {
   }
 
   // GETTERS
-  public Text getT_title() {return t_title;}
   public TextField getTf_departureCity() {return tf_departureCity;}
   public TextField getTf_destinationCity() {return tf_destinationCity;}
   public DatePicker getDp_departureTime() {return dp_departureTime;}
