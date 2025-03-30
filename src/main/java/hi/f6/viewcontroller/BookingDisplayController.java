@@ -15,12 +15,8 @@ public class BookingDisplayController {
         this.view = view_var;
     }
 
-    public void updateFlightInfoOnClick() {
-
-    }
-
     public void bookFlight() {
-
+        // Database call
     }
 
     public void updateAvaiSeat() {
@@ -38,7 +34,7 @@ public class BookingDisplayController {
         this.view.getLayoverText().setText("Layover: " + flight.getLayovers());
         this.view.getCfootpText().setText("Carbone footprint: " + flight.getCarbonFootprint());
         this.view.getNbSeatAvaibText()
-                .setText("Available seat: " + Seat.getNbPrenium(Arrays.asList(flight.getSeats())));
+                .setText("Available seat: ");
 
     }
 

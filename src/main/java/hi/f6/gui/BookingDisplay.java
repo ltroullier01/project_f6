@@ -1,6 +1,7 @@
 package hi.f6.gui;
 
 import hi.f6.controllers.FlightController;
+import hi.f6.models.Seat;
 import hi.f6.viewcontroller.BookingDisplayController;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
@@ -28,8 +29,8 @@ public class BookingDisplay extends VBox {
         Text cfootpText;
         Text nbSeatAvaibText;
 
-        ChoiceBox classSelector;
-        ChoiceBox seatSelector;
+        ChoiceBox<String> classSelector;
+        ChoiceBox<Seat> seatSelector;
 
         Button bookingButton;
 
@@ -60,8 +61,11 @@ public class BookingDisplay extends VBox {
 
                 Text classText = new Text("Class: ");
                 Text seatText = new Text("Seat: ");
-                this.classSelector = new ChoiceBox<String>();
-                this.seatSelector = new ChoiceBox<String>();
+
+                String st[] = { "eco", "prem" };
+                this.classSelector = new ChoiceBox<String>(FXCollections.observableArrayList(st));
+
+                this.seatSelector = new ChoiceBox<Seat>();
 
                 this.bookingButton = new Button("Book");
                 this.bookingButton.setStyle(
@@ -148,11 +152,11 @@ public class BookingDisplay extends VBox {
                 return nbSeatAvaibText;
         }
 
-        public ChoiceBox getClassSelector() {
+        public ChoiceBox<String> getClassSelector() {
                 return classSelector;
         }
 
-        public ChoiceBox getSeatSelector() {
+        public ChoiceBox<Seat> getSeatSelector() {
                 return seatSelector;
         }
 
