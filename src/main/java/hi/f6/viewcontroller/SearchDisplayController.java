@@ -31,7 +31,7 @@ public class SearchDisplayController {
     this.flightDisplay = flightDisplay;
   }
 
-  public void search() {
+  public ObservableList<Flight> search() {
     String departureCity = this.searchDisplay.getTf_departureCity().getText();
     String arrivalCity = this.searchDisplay.getTf_destinationCity().getText();
     LocalDate departureDate =
@@ -107,13 +107,10 @@ public class SearchDisplayController {
       e.printStackTrace();
     }
 
-    if (flightDisplay != null) {
-      flightDisplay.setFlights(matchingFlights);
-    }
-
     System.out.println(departureCity);
     System.out.println(arrivalCity);
     System.out.println(departureDate);
     System.out.println(arrivalDate);
+    return matchingFlights;
   }
 }

@@ -9,13 +9,15 @@ import javafx.scene.layout.BorderPane;
 
 public class MainView extends BorderPane {
 
+  private FlightController flightController;
   SearchDisplay sd;
   FlightDisplay fd;
   BookingDisplay bd;
 
   public MainView() {
-    this.sd = new SearchDisplay();
-    this.fd = new FlightDisplay();
+    this.flightController = new FlightController();
+    this.sd = new SearchDisplay(this);
+    this.fd = new FlightDisplay(this);
     this.bd = new BookingDisplay();
 
     this.setLeft(this.sd);
@@ -23,10 +25,19 @@ public class MainView extends BorderPane {
     this.setRight(this.bd);
 
     this.sd.controller.setFlightDisplay(this.fd);
-    this.fd.setOnFlightSelected(flight ->
-        this.bd.getController().updateFlightInfoOnClick(flight)
-      );
 
     BorderPane.setMargin(this.bd, new Insets(0, 20, 0, 0));
+  }
+
+  public FlightDisplay getFD() {
+    return fd;
+  }
+
+  public BookingDisplay getBD() {
+    return this.bd;
+  }
+
+  public FlightController getFlightController() {
+    return this.flightController;
   }
 }

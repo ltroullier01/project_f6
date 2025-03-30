@@ -6,7 +6,6 @@ import hi.f6.viewcontroller.SearchDisplayController;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -36,7 +35,7 @@ public class SearchDisplay extends VBox {
   public SearchDisplay(MainView mainView_var) {
     // MainView and Controller creation
     this.mainView = mainView_var;
-    this.controller = new SearchDisplayController(this, this.mainView.getFlightController());
+    this.controller = new SearchDisplayController(this);
 
     // Title of the section
     this.t_title = new Text("Flight Reasearch");
@@ -80,7 +79,7 @@ public class SearchDisplay extends VBox {
           @Override
           public void handle(ActionEvent e) {
             List<Flight> searchResult = new ArrayList<>();
-            mainView.getFd().getFlightDisplayController().updateTable(controller.search());
+            mainView.getFD().setFlights(controller.search());
           }
         }
       );
@@ -102,10 +101,27 @@ public class SearchDisplay extends VBox {
   }
 
   // GETTERS
-  public Text getT_title() {return t_title;}
-  public TextField getTf_departureCity() {return tf_departureCity;}
-  public TextField getTf_destinationCity() {return tf_destinationCity;}
-  public DatePicker getDp_departureTime() {return dp_departureTime;}
-  public DatePicker getDp_arrivalTime() {return dp_arrivalTime;}
-  public Button getB_search() {return b_search;}
+  public Text getT_title() {
+    return t_title;
+  }
+
+  public TextField getTf_departureCity() {
+    return tf_departureCity;
+  }
+
+  public TextField getTf_destinationCity() {
+    return tf_destinationCity;
+  }
+
+  public DatePicker getDp_departureTime() {
+    return dp_departureTime;
+  }
+
+  public DatePicker getDp_arrivalTime() {
+    return dp_arrivalTime;
+  }
+
+  public Button getB_search() {
+    return b_search;
+  }
 }

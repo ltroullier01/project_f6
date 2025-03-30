@@ -1,6 +1,7 @@
 package hi.f6.gui;
 
 import hi.f6.models.Flight;
+import hi.f6.viewcontroller.FlightDisplayController;
 import java.util.function.Consumer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,9 +17,9 @@ public class FlightDisplay extends VBox {
 
   private TableView<Flight> flightTable;
   private ObservableList<Flight> flightList;
-  private Consumer<Flight> onFlightSelected;
+  private FlightDisplayController controller;
 
-  public FlightDisplay() {
+  public FlightDisplay(MainView mainView) {
     Text title = new Text("Available Flights");
     title.setFont(new Font(20));
 
@@ -53,12 +54,13 @@ public class FlightDisplay extends VBox {
     flightTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     flightTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+    controller = new FlightDisplayController(this, mainView);
     flightTable
       .getSelectionModel()
       .selectedItemProperty()
-      .addListener((obs, oldSelection, newSelection) -> {
-        if (newSelection != null && onFlightSelected != null) {
-          onFlightSelected.accept(newSelection);
+      .addListener((obs, oldSel, newSel) -> {
+        if (newSel != null) {
+          controller.onItemClicked(newSel);
         }
       });
 
@@ -72,11 +74,11 @@ public class FlightDisplay extends VBox {
   }
 
   // Get selected flight
-  public Flight getSelectedFlight() {
-    return flightTable.getSelectionModel().getSelectedItem();
+  public TableView<Flight> getFlightTable() {
+    return flightTable;
   }
 
-  public void setOnFlightSelected(Consumer<Flight> callback) {
-    this.onFlightSelected = callback;
+  public FlightDisplayController getFlightDisplayController() {
+    return controller;
   }
 }
