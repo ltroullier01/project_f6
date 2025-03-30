@@ -1,6 +1,7 @@
 package hi.f6.database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -19,16 +20,22 @@ public class FlightDB {
         this.con = con;
     }
 
-    public List<Flight> search(String departureCity, String arrivalCity, LocalDate departureDate, LocalDate ArrivalDate){
+    public List<Flight> search(String departureCity, String arrivalCity, LocalDate departureDate, LocalDate arrivalDate){
         List<Flight> listeFlight = new ArrayList<>();
-        try (Statement stmt = this.con.createStatement()) {
 
-            String select = "SELECT flightID, flightRef, departureCity, destinationCity, layovers, departureTime, arrivalTime, price, duration, carbonFootprint\r\n" + 
-                                "FROM flights\r\n" + 
-                                "WHERE departure = "+departureCity+" AND destination = "+arrivalCity+" \r\n" +
-                                "AND departure_time = "+departureDate.toString()+" AND arrival_time = "+departureDate.toString()+";";
+        String select = "SELECT id, ref, departure_city, destination_city, layover, departure_time, arrival_time, price, duration, carbon_footprint " +
+                    "FROM flights " +
+                    "WHERE departureCity = ? AND destinationCity = ? " +
+                    "AND departureTime >= ? AND arrivalTime <= ?";    
+        
+        try (PreparedStatement pstmt = this.con.prepareStatement(select)) {
+
+            pstmt.setString(1, departureCity);
+            pstmt.setString(2, arrivalCity);
+            pstmt.setString(3, departureDate.toString()); 
+            pstmt.setString(4, arrivalDate.toString());
             
-            ResultSet rs = stmt.executeQuery(select);
+            ResultSet rs = pstmt.executeQuery(select);
             
             while (rs.next()) {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
