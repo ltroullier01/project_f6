@@ -20,7 +20,10 @@ public class MainView extends BorderPane {
 
     public MainView() {
         this.util = new Util();
-        this.con = this.util.getConnection();
+        this.con = this.util.getConnectionClement();
+        if (this.con == null){
+            this.con = this.util.getConnectionLael();
+        }
         if (this.con != null) {
             System.out.println("Connexion réussie !");
         } else {

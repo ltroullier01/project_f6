@@ -37,30 +37,13 @@ public class SearchDisplayController {
         // Verification of the case
         if ((departureCity == "" || departureCity.equals("From")) && (arrivalCity == "" || arrivalCity.equals("To"))) {
             searchResult = this.flightController.searchWithoutDepartureAndArrivalCity(departureDate, arrivalDate);
-            System.out.println("Without Departure & Arrival");
         } else if (departureCity == "" || departureCity.equals("From")) {
             searchResult = this.flightController.searchWithoutDepartureCity(arrivalCity, departureDate, arrivalDate);
-            System.out.println("Without Departure");
-            System.out.println("Destination : " + arrivalCity);
         } else if (arrivalCity == "" || arrivalCity.equals("To")) {
             searchResult = this.flightController.searchWithoutArrivalCity(departureCity, departureDate, arrivalDate);
-            System.out.println("Without Arrival");
-            System.out.println("Departure : " + departureCity);
         } else {
             searchResult = this.flightController.search(departureCity, arrivalCity, departureDate, arrivalDate);
-            System.out.println("Departure : " + departureCity);
-            System.out.println("Destination : " + arrivalCity);
-            System.out.println(departureCity.toString());
         }
-        System.out.println(departureDate);
-        System.out.println(arrivalDate);
-
-        Seat[] seat0 = new Seat[2];
-        seat0[0] = new Seat("null", true);
-        seat0[1] = new Seat("null", true);
-
-        Seat[] seat1 = new Seat[1];
-        seat1[0] = new Seat("null", true);
 
         return searchResult;
     }

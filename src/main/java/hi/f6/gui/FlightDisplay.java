@@ -49,16 +49,6 @@ public class FlightDisplay extends VBox {
 
         flightTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
-        Seat[] seat = new Seat[3];
-        seat[0] = new Seat("null", true);
-        seat[1] = new Seat("null", true);
-        seat[2] = new Seat("null", true);
-        /*flightTable.getItems().add(new Flight(0, "132ED22E", "Paris", "Marseille", LocalDateTime.of(
-                2021, Month.APRIL, 24, 14, 33),
-                LocalDateTime.of(
-                        2021, Month.APRIL, 24, 18, 13),
-                200, 45, 2, seat, 40));*/
-
         this.getChildren().add(flightTable);
 
         // Controller calls and event handler

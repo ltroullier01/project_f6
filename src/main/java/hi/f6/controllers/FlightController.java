@@ -46,21 +46,21 @@ public class FlightController {
     return listeFlight;
   }
 
-  public List<Flight> searchWithoutDepartureCity(String departureCity, LocalDate departureDate, LocalDate ArrivalDate){
+  public List<Flight> searchWithoutDepartureCity(String arrivalCity, LocalDate departureDate, LocalDate ArrivalDate){
     List<Flight> listeFlight = new ArrayList<>();
-    //listeFlight = flightDB.getWithoutDepartureCity(departureCity, departureDate, ArrivalDate);
+    listeFlight = flightDB.searchWithoutDepartureCity(arrivalCity, departureDate, ArrivalDate);
     return listeFlight;
   }
 
-  public List<Flight> searchWithoutArrivalCity(String arrivalCity, LocalDate departureDate, LocalDate ArrivalDate){
+  public List<Flight> searchWithoutArrivalCity(String departureCity, LocalDate departureDate, LocalDate ArrivalDate){
     List<Flight> listeFlight = new ArrayList<>();
-    //listeFlight = flightDB.getWithoutArrivalCity(arrivalCity, departureDate, ArrivalDate);
+    listeFlight = flightDB.searchWithoutArrivalCity(departureCity, departureDate, ArrivalDate);
     return listeFlight;
   }
 
   public List<Flight> searchWithoutDepartureAndArrivalCity(LocalDate departureDate, LocalDate ArrivalDate){
     List<Flight> listeFlight = new ArrayList<>();
-    //listeFlight = flightDB.getWithoutDepartureAndArrivalCity(departureDate, ArrivalDate);
+    listeFlight = flightDB.searchWithoutDepartureAndArrivalCity(departureDate, ArrivalDate);
     return listeFlight;
   }
 
