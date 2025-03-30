@@ -23,7 +23,7 @@ public class SearchDisplayController {
         this.flightController = flightController_var;
     }
 
-    // Search methid depending on the different cases
+    // Search method depending on the different cases
     public List<Flight> search() {
 
         // Recovery of values
