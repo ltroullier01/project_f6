@@ -2,6 +2,7 @@ package hi.f6.models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Flight {
 
@@ -14,7 +15,7 @@ public class Flight {
   private float price;
   private int duration;
   private int layovers;
-  private Seat[] seats;
+  private List<Seat> seats;
   private float carbonFootprint;
 
   public Flight(int flightID) {
@@ -22,7 +23,7 @@ public class Flight {
   }
 
   public Flight(int flightID, String flightRef, String departureCity, String destinationCity,
-      LocalDate departureTime, LocalDate arrivalTime, float price, int duration, int layovers, Seat[] seats,
+      LocalDate departureTime, LocalDate arrivalTime, float price, int duration, int layovers, List<Seat> seats,
       float carbonFootprint) {
     this.flightID = flightID;
     this.flightRef = flightRef;
@@ -36,7 +37,7 @@ public class Flight {
     this.seats = seats;
     this.carbonFootprint = carbonFootprint;
   }
-  
+
   public Flight(int flightID, String flightRef, String departureCity, String destinationCity, LocalDate departureTime,
       LocalDate arrivalTime, float price, int duration, int layovers, float carbonFootprint) {
     this.flightID = flightID;
@@ -84,7 +85,7 @@ public class Flight {
     return layovers;
   }
 
-  public Seat[] getSeats() {
+  public List<Seat> getSeats() {
     return seats;
   }
 
@@ -129,7 +130,7 @@ public class Flight {
     this.layovers = layovers;
   }
 
-  public void setSeats(Seat[] seats) {
+  public void setSeats(List<Seat> seats) {
     this.seats = seats;
   }
 

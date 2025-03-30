@@ -33,8 +33,13 @@ public class BookingDisplayController {
         this.view.getDurationText().setText("Duration: " + flight.getDuration());
         this.view.getLayoverText().setText("Layover: " + flight.getLayovers());
         this.view.getCfootpText().setText("Carbone footprint: " + flight.getCarbonFootprint());
-        this.view.getNbSeatAvaibText()
-                .setText("Available seat: ");
+        if (this.view.getClassSelector().getValue() == "eco") {
+            this.view.getNbSeatAvaibText()
+                    .setText("Available seat: " + Seat.getNbEco(flight.getSeats()));
+        } else {
+            this.view.getNbSeatAvaibText()
+                    .setText("Available seat: " + Seat.getNbPrenium(flight.getSeats()));
+        }
 
     }
 
