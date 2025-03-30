@@ -1,5 +1,6 @@
 package hi.f6.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Flight {
@@ -8,8 +9,8 @@ public class Flight {
   private String flightRef;
   private String departureCity;
   private String destinationCity;
-  private LocalDateTime departureTime;
-  private LocalDateTime arrivalTime;
+  private LocalDate departureTime;
+  private LocalDate arrivalTime;
   private float price;
   private int duration;
   private int layovers;
@@ -21,7 +22,7 @@ public class Flight {
   }
 
   public Flight(int flightID, String flightRef, String departureCity, String destinationCity,
-      LocalDateTime departureTime, LocalDateTime arrivalTime, float price, int duration, int layovers, Seat[] seats,
+      LocalDate departureTime, LocalDate arrivalTime, float price, int duration, int layovers, Seat[] seats,
       float carbonFootprint) {
     this.flightID = flightID;
     this.flightRef = flightRef;
@@ -33,6 +34,20 @@ public class Flight {
     this.duration = duration;
     this.layovers = layovers;
     this.seats = seats;
+    this.carbonFootprint = carbonFootprint;
+  }
+  
+  public Flight(int flightID, String flightRef, String departureCity, String destinationCity, LocalDate departureTime,
+      LocalDate arrivalTime, float price, int duration, int layovers, float carbonFootprint) {
+    this.flightID = flightID;
+    this.flightRef = flightRef;
+    this.departureCity = departureCity;
+    this.destinationCity = destinationCity;
+    this.departureTime = departureTime;
+    this.arrivalTime = arrivalTime;
+    this.price = price;
+    this.duration = duration;
+    this.layovers = layovers;
     this.carbonFootprint = carbonFootprint;
   }
 
@@ -49,11 +64,11 @@ public class Flight {
     return destinationCity;
   }
 
-  public LocalDateTime getDepartureTime() {
+  public LocalDate getDepartureTime() {
     return departureTime;
   }
 
-  public LocalDateTime getArrivalTime() {
+  public LocalDate getArrivalTime() {
     return arrivalTime;
   }
 
@@ -94,11 +109,11 @@ public class Flight {
     this.destinationCity = destinationCity;
   }
 
-  public void setDepartureTime(LocalDateTime departureTime) {
+  public void setDepartureTime(LocalDate departureTime) {
     this.departureTime = departureTime;
   }
 
-  public void setArrivalTime(LocalDateTime arrivalTime) {
+  public void setArrivalTime(LocalDate arrivalTime) {
     this.arrivalTime = arrivalTime;
   }
 

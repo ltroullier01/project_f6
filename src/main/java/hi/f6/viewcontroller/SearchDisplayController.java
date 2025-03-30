@@ -50,6 +50,7 @@ public class SearchDisplayController {
             searchResult = this.flightController.search(departureCity, arrivalCity, departureDate, arrivalDate);
             System.out.println("Departure : " + departureCity);
             System.out.println("Destination : " + arrivalCity);
+            System.out.println(departureCity.toString());
         }
         System.out.println(departureDate);
         System.out.println(arrivalDate);
@@ -61,16 +62,6 @@ public class SearchDisplayController {
         Seat[] seat1 = new Seat[1];
         seat1[0] = new Seat("null", true);
 
-        searchResult.add(new Flight(0, "152TR22E", "Prague", "Marseille", LocalDateTime.of(
-                2012, Month.MARCH, 12, 19, 33),
-                LocalDateTime.of(
-                        2013, Month.DECEMBER, 4, 8, 1),
-                9000, 45, 2, seat0, 40));
-        searchResult.add(new Flight(0, "132PL67E", "Prague", "Lille", LocalDateTime.of(
-                2021, Month.JANUARY, 24, 14, 33),
-                LocalDateTime.of(
-                        2021, Month.JULY, 18, 8, 43),
-                20, 45, 2, seat1, 40));
         return searchResult;
     }
 }
