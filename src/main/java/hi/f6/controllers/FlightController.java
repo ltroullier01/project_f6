@@ -42,7 +42,7 @@ public class FlightController {
 
   public List<Flight> search(String departureCity, String arrivalCity, LocalDate departureDate, LocalDate ArrivalDate){
     List<Flight> listeFlight = new ArrayList<>();
-    //listeFlight = flightDB.getWithoutDepartureCity(departureCity, arrivalCity, departureDate, ArrivalDate);
+    listeFlight = flightDB.search(departureCity, arrivalCity, departureDate, ArrivalDate);
     return listeFlight;
   }
 
