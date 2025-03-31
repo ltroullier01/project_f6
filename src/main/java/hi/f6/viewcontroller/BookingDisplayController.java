@@ -20,6 +20,8 @@ public class BookingDisplayController {
     public void bookFlight() {
         this.view.getFlightController().bookSeat(this.view.getSeatSelector().getValue());
         this.view.getBookingController().addBooking(this.view.getSeatSelector().getValue(), selectedFlight);
+        this.selectedFlight.setSeats(this.view.getFlightController().getSeats(this.selectedFlight));
+        updateInfoFlightOnClick(this.selectedFlight);
     }
 
     public void updateAvaiSeat() {

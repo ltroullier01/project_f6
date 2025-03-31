@@ -3,6 +3,7 @@ package hi.f6.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -45,7 +46,18 @@ public class SeatDB {
         return listeSeats;
     }
 
-    public void bookSeat() {
+    public void bookSeat(Seat seat) {
+        try (PreparedStatement pst = con.prepareStatement(
+                "update seats  "
+                        + " set available=?"
+                        + " where id = ?")) {
+            pst.setInt(1, 0);
+            pst.setInt(2, seat.getId());
+            pst.executeUpdate();
+            System.out.println(seat.getId());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
     }
 

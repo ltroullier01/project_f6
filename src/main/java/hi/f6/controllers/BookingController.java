@@ -22,7 +22,7 @@ public class BookingController {
     }
 
     public void addBooking(Seat seat, Flight flight) {
-        //
+        this.bookingDB.createBooking(flight, seat);
     }
 
     public void deleteBooking(Booking booking) {

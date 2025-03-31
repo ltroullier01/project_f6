@@ -27,7 +27,8 @@ public class Seat {
   }
 
   public static List<Seat> getNbPrenium(List<Seat> seats) {
-    return seats.stream().filter(seat -> seat.getSclass().equals("prem")).collect(Collectors.toList());
+    return seats.stream().filter(seat -> seat.getSclass().equals("prem") && seat.isAvailable())
+        .collect(Collectors.toList());
 
   }
 

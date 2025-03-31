@@ -23,9 +23,11 @@ CREATE TABLE IF NOT EXISTS seats (
 CREATE TABLE IF NOT EXISTS bookings (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     flight_id INTEGER NOT NULL,
+    seat_id INTEGER NOT NULL,
     booking_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     payment_status VARCHAR (255) CHECK(
         payment_status IN ('Pending', 'Paid', 'Cancelled')
     ) DEFAULT 'Pending',
-    FOREIGN KEY(flight_id) REFERENCES flights(id)
+    FOREIGN KEY(flight_id) REFERENCES flights(id),
+    FOREIGN KEY(seat_id) REFERENCES seats(id)
 );

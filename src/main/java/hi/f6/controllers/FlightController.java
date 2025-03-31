@@ -78,7 +78,7 @@ public class FlightController {
   }
 
   public void bookSeat(Seat seat) {
-    seatDB.bookSeat();
+    seatDB.bookSeat(seat);
   }
 
 }
