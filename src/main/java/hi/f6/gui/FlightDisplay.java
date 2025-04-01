@@ -7,11 +7,15 @@ import hi.f6.controllers.FlightController;
 import hi.f6.models.Flight;
 import hi.f6.models.Seat;
 import hi.f6.viewcontroller.FlightDisplayController;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class FlightDisplay extends VBox {
 
@@ -24,6 +28,8 @@ public class FlightDisplay extends VBox {
     Flight selectedFlight;
 
     public FlightDisplay(MainView par, FlightController fController) {
+
+        this.setSpacing(13);
 
         this.parent = par;
         this.flightController = fController;
@@ -54,7 +60,12 @@ public class FlightDisplay extends VBox {
 
         flightTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
-        this.getChildren().add(flightTable);
+        Text title = new Text("Research results: ");
+        title.setFont(new Font(30));
+        HBox hBoxTitle = new HBox(title);
+        hBoxTitle.setAlignment(Pos.CENTER);
+
+        this.getChildren().addAll(hBoxTitle, flightTable);
 
         // Controller calls and event handler
 
